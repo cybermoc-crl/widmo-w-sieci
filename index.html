@@ -12,8 +12,10 @@
     <div id="zegar-kontener">
         <div id="zegar">20:00</div>
     </div>
-
-    <main id="escape-room-container">
+	
+	<img src="media/duszek.gif" alt="Duszek" id="duszek-gif" class="ukryty">
+    
+	<main id="escape-room-container">
 
         <section id="faza-1" class="ekran aktywny">
             <div id="faza-1-intro">
@@ -23,7 +25,7 @@
             </div>
 
             <div id="faza-1-ladowanie" class="ukryty">
-                <img src="media/logo-antywirusa.png" alt="Logo antywirusa" id="logo-antywirusa">
+                <img src="media/booting.png" alt="Logo antywirusa" id="logo-antywirusa">
                 <div id="pasek-postepu-kontener">
                     <div id="pasek-postepu-wewn"></div>
                 </div>
@@ -31,7 +33,6 @@
             </div>
 
             <div id="faza-1-tekst" class="ukryty">
-                <img src="media/duszek.gif" alt="Duszek" id="duszek-gif">
                 <p id="tekst-pisany-1" class="tekst-pisany"></p>
                 <button id="przycisk-faza-1" class="przycisk ukryty" onclick="pokazEkran('faza-2')">DO DZIEŁA</button>
             </div>
@@ -194,6 +195,17 @@
                 </div>
         </div>
     </div>
+	
+	<audio id="muzyka-tla" src="media/tlo.mp3" loop></audio>
+    
+    <audio id="sfx-pisanie-petla" src="media/pisanie.mp3" loop></audio>
+    
+    <audio id="sfx-poprawny" src="media/dobrze.mp3"></audio>
+    <audio id="sfx-bledny" src="media/zle.mp3"></audio>
+    
+    <audio id="sfx-wygrana" src="media/wygrana.mp3"></audio>
+    
+    <audio id="sfx-przegrana" src="media/porazka.mp3"></audio>
 
     <script src="script.js"></script>
 </body>

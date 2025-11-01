@@ -1,3 +1,22 @@
+/* ===== POBIERANIE ELEMENTÓW AUDIO ===== */
+const muzykaTla = document.getElementById('muzyka-tla');
+const sfxPisaniePetla = document.getElementById('sfx-pisanie-petla');
+const sfxPoprawny = document.getElementById('sfx-poprawny');
+const sfxBledny = document.getElementById('sfx-bledny');
+const sfxWygrana = document.getElementById('sfx-wygrana');
+const sfxPrzegrana = document.getElementById('sfx-przegrana');
+const duszekGif = document.getElementById('duszek-gif');
+/**
+ * Pomocnicza funkcja do odtwarzania dźwięków (z resetowaniem)
+ * @param {HTMLAudioElement} elementAudio 
+ */
+function odtworzDzwiek(elementAudio) {
+    if (elementAudio) {
+        elementAudio.currentTime = 0; // Resetuje dźwięk, aby mógł grać szybko po sobie
+        elementAudio.play();
+    }
+}
+
 /* ===== ZMIENNE GLOBALNE ===== */
 let timerInterval = null; // Przechowuje nasz interwał zegara
 let czasPozostaly = 20 * 60; // 20 minut * 60 sekund
@@ -6,9 +25,9 @@ let modalCallback = null; // Funkcja do wywołania po zamknięciu modala
 
 // Teksty do animacji pisania (możesz je dowolnie zmieniać)
 // Użyj `\n` aby zrobić nową linię
-const TEKST_FAZA_1 = "Witaj...\nNazywają mnie 'Widmo'. \nWłaśnie przejąłem kontrolę nad Twoim urządzeniem. \n\nWidzę, że masz na nim coś, co należy do mojej przyjaciółki, Zosi. Lepiej to odzyskaj, zanim będzie za późno. \n\nUruchomiłem tryb awaryjny. Masz 20 minut, zanim sformatuję Ci dysk. Powodzenia.";
-const TEKST_FAZA_2 = "Świetnie. Pierwszy krok za Tobą. \nAle to była tylko rozgrzewka. \n\nZaszyfrowałem kopię zapasową Zosi. Jeśli jej nie odzyskasz, straci wszystkie swoje dane. \n\nKlucz do odszyfrowania podzieliłem na trzy części. Zdobądź je wszystkie.";
-const TEKST_FAZA_3 = "Widzę, że umiesz myśleć logicznie... \nAle czy potrafisz też myśleć... nieszablonowo? \n\nKolejna część klucza jest ukryta w systemie weryfikacji. Złam go.";
+const TEKST_FAZA_1 = "Cześć! Jestem Safira, Twój inteligentny antywirus! Przez otworzenie szkodliwego linku, haker otrzymał dostęp do wszystkich Twoich plików. Na szczęście dzięki swojej wiadomości zostawił zaszyfrowany cyfrowy ślad, który pomoże policji w jego ujęciu. Abym mogła go odczytać, podążaj jego tropem, wykonując szereg moich zadań. Po ukończeniu każdego z nich, ujawnią się fragmenty jego numeru IP. Zapamiętaj je, to bardzo istotne! Powodzenia!";
+const TEKST_FAZA_2 = "Brawo! Udało ci się odzyskać część plików. Hmm... Wygląda na to, że ten haker to prawdziwe widmo i umie zacierać ślady. Przez to moje oprogramowanie nie jest w stanie odczytać niezbędnych numerów. Opracowałam jednak coś, co ci na pewno się przyda! Użyj mojego zestawu szyfrów aby wykonać następne zadanie i ustawić dwuetapową weryfikację. Poniżej podaję fragment śladu hakera:\n  \n  ";
+const TEKST_FAZA_3 = "Łamanie szyfrów to dla Ciebie pestka :) Dzięki temu jesteś już w połowie naszej misji! O nie!... Haker chyba się zorientował, że próbujemy pokrzyżować jego plany! Nie będę mogła Ci już dalej pomagać. Na szczęście zdążyłam zapisać Ci kolejny ślad na stronie, do której podam Ci link. Przez wirusa nie będzie to jednak takie proste. Przejdź przez sieć URL zapamiętując dobrą kolejność. Uważaj jednak na szkodliwe linki- nie zawsze wyglądają podejrzanie...";
 
 /* ===== GŁÓWNA FUNKCJA NAWIGACYJNA ===== */
 
@@ -53,8 +72,14 @@ function pokazEkran(idEkranu) {
  * 1b: Wywoływane po kliknięciu koperty
  */
 function uruchomGre() {
+    // Start muzyki w tle (Punkt 1)
+    if (muzykaTla && muzykaTla.paused) {
+        muzykaTla.volume = 0.3; // Możesz ustawić głośność (0.0 do 1.0)
+        muzykaTla.play();
+    }
+
     // Pokaż modal z filmem, a po zamknięciu uruchom 'startAntywirus'
-    pokazModal('video', 'media/haker-wiadomosc.mp4', 'startAntywirus');
+    pokazModal('video', 'media/aw.mp4', 'startAntywirus');
 }
 
 /**
@@ -114,23 +139,21 @@ function sprawdzPin() {
     const wiadomosc = document.getElementById('wiadomosc-faza-2');
 
     if (pinWpisany === "3285") {
+        odtworzDzwiek(sfxPoprawny); // (Punkt 3)
         wiadomosc.textContent = "";
-        // Ukryj sekcję z zadaniem
+        // ... (reszta kodu bez zmian) ...
         document.querySelector('#faza-2 .ramka').classList.add('ukryty');
         document.querySelector('#faza-2 .kontener-kodu').classList.add('ukryty');
         document.querySelector('#faza-2 .tytul-zadania').classList.add('ukryty');
         document.querySelector('#faza-2 .podtytul-zadania').classList.add('ukryty');
-
-        // Pokaż sekcję sukcesu
         document.getElementById('faza-2-sukces').classList.remove('ukryty');
-        
-        // Uruchom pisanie, a po nim pokaż liczbę i przycisk
         efektPisania('tekst-pisany-2', TEKST_FAZA_2, () => {
             document.getElementById('liczba-b4').classList.remove('ukryty');
             document.getElementById('przycisk-faza-2').classList.remove('ukryty');
         });
 
     } else {
+        odtworzDzwiek(sfxBledny); // (Punkt 3)
         wiadomosc.textContent = "Zły kod";
     }
 }
@@ -143,23 +166,20 @@ function sprawdzPin() {
 function sprawdzHaslo() {
     let hasloWpisane = document.getElementById('haslo-input').value;
     const wiadomosc = document.getElementById('wiadomosc-faza-3');
-    
-    // Normalizujemy hasło do wielkich liter
     hasloWpisane = hasloWpisane.toUpperCase();
-
     const poprawne1 = "SILNE HASLO TO PODSTAWA";
-    const poprawne2 = "SILNE HASŁO TO PODSTAWA"; // Z polskim znakiem
+    const poprawne2 = "SILNE HASŁO TO PODSTAWA";
 
     if (hasloWpisane === poprawne1 || hasloWpisane === poprawne2) {
+        odtworzDzwiek(sfxPoprawny); // (Punkt 3)
         wiadomosc.textContent = "";
-        // Ukryj zadanie
+        // ... (reszta kodu bez zmian) ...
         document.getElementById('faza-3-zadanie').classList.add('ukryty');
         document.querySelector('#faza-3 .tytul-zadania').classList.add('ukryty');
         document.querySelector('#faza-3 .podtytul-zadania').classList.add('ukryty');
-        
-        // Pokaż sukces
         document.getElementById('faza-3-sukces').classList.remove('ukryty');
     } else {
+        odtworzDzwiek(sfxBledny); // (Punkt 3)
         wiadomosc.textContent = "Wskazówka: QWERTY";
     }
 }
@@ -246,10 +266,11 @@ function sprawdzIP() {
     const wiadomosc = document.getElementById('wiadomosc-faza-5');
 
     if (ip1 === "17" && ip2 === "88" && ip3 === "55" && ip4 === "18") {
-        // Poprawny IP - WYGRANA
+        odtworzDzwiek(sfxPoprawny); // (Punkt 3)
         wiadomosc.textContent = "";
-        pokazEkran('faza-6-wygrana'); // To wywoła funkcję uruchomWygrana()
+        pokazEkran('faza-6-wygrana');
     } else {
+        odtworzDzwiek(sfxBledny); // (Punkt 3)
         wiadomosc.textContent = "Podpowiedź: kolejność alfabetu";
     }
 }
@@ -260,13 +281,16 @@ function sprawdzIP() {
  * 6a/b: Wywoływane przy wejściu na ekran wygranej
  */
 function uruchomWygrana() {
-    if (!czyGraAktywna) return; // Już wygrana/przegrana
-    
+    if (!czyGraAktywna) return; 
+
     czyGraAktywna = false;
-    clearInterval(timerInterval); // Zatrzymaj zegar
+    clearInterval(timerInterval); 
     document.getElementById('zegar-kontener').classList.add('ukryty');
-    
-    // Pokaż film końcowy, a po nim treść gratulacji
+
+    // (Punkt 4: Dźwięk wygranej)
+    muzykaTla.pause(); // Zatrzymujemy muzykę w tle
+    odtworzDzwiek(sfxWygrana); // Odtwarzamy dźwięk wygranej
+
     pokazModal('video', 'media/F6-zakonczenie.mp4', 'pokazGratulacje');
 }
 
@@ -281,13 +305,16 @@ function pokazGratulacje() {
  * 7: Wywoływane, gdy zegar dojdzie do 0
  */
 function przegrana() {
-    if (!czyGraAktywna) return; // Gra już się zakończyła (np. wygraną)
+    if (!czyGraAktywna) return; 
 
     czyGraAktywna = false;
-    clearInterval(timerInterval); // Zatrzymaj zegar
+    clearInterval(timerInterval); 
     document.getElementById('zegar-kontener').classList.add('ukryty');
-    
-    // Pokaż ekran przegranej
+
+    // (Punkt 5: Dźwięk przegranej)
+    muzykaTla.pause(); // Zatrzymujemy muzykę w tle
+    odtworzDzwiek(sfxPrzegrana); // Odtwarzamy dźwięk przegranej
+
     pokazEkran('faza-7-przegrana');
 }
 
@@ -414,18 +441,49 @@ function zamknijModal() {
 function efektPisania(elementId, tekst, funkcjaPoSkonczeniu = null) {
     const element = document.getElementById(elementId);
     if (!element) return;
-    
+
     let i = 0;
     element.innerHTML = ""; // Wyczyść element
 
+    // === NOWY KOD: POKAŻ DUSZKA ===
+    if (duszekGif) {
+        duszekGif.classList.remove('ukryty');
+    }
+    // ================================
+
+    // STARTUJEMY PĘTLĘ DŹWIĘKOWĄ PISANIA
+    if (sfxPisaniePetla) {
+        sfxPisaniePetla.currentTime = 0;
+        sfxPisaniePetla.play();
+    }
+
     function pisz() {
         if (i < tekst.length) {
-            element.innerHTML += tekst.charAt(i);
+            // Ta część jest bez zmian
+            const znak = tekst.charAt(i);
+            element.innerHTML += znak;
+
             i++;
             setTimeout(pisz, 30); // Szybkość pisania (w milisekundach)
-        } else if (funkcjaPoSkonczeniu) {
-            // Pisanie skończone, wywołaj funkcję zwrotną
-            funkcjaPoSkonczeniu();
+
+        } else {
+            // Pisanie skończone
+
+            // === NOWY KOD: UKRYJ DUSZKA ===
+            if (duszekGif) {
+                duszekGif.classList.add('ukryty');
+            }
+            // ==============================
+
+            // ZATRZYMUJEMY PĘTLĘ DŹWIĘKOWĄ PISANIA
+            if (sfxPisaniePetla) {
+                sfxPisaniePetla.pause();
+            }
+
+            // Wywołaj funkcję zwrotną (jeśli istnieje)
+            if (funkcjaPoSkonczeniu) {
+                funkcjaPoSkonczeniu();
+            }
         }
     }
     pisz(); // Rozpocznij pisanie
