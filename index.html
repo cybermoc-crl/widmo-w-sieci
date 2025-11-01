@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIDMO W SIECI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="zegar-kontener">
+        <div id="zegar">20:00</div>
+    </div>
+	
+	<img src="media/duszek.gif" alt="Duszek" id="duszek-gif" class="ukryty">
+    
+	<main id="escape-room-container">
+
+        <section id="faza-1" class="ekran aktywny">
+            <div id="faza-1-intro">
+                <h1 class="tytul-glowny">WIDMO W SIECI</h1>
+                <h2 class="podtytul">escape room</h2>
+                <img src="media/koperta.png" alt="Koperta" class="przycisk-obraz" id="przycisk-koperta" onclick="uruchomGre()">
+            </div>
+
+            <div id="faza-1-ladowanie" class="ukryty">
+                <img src="media/booting.png" alt="Logo antywirusa" id="logo-antywirusa">
+                <div id="pasek-postepu-kontener">
+                    <div id="pasek-postepu-wewn"></div>
+                </div>
+                <p id="tekst-ladowania">uruchamianie trybu awaryjnego</p>
+            </div>
+
+            <div id="faza-1-tekst" class="ukryty">
+                <p id="tekst-pisany-1" class="tekst-pisany"></p>
+                <button id="przycisk-faza-1" class="przycisk ukryty" onclick="pokazEkran('faza-2')">DO DZIEŁA</button>
+            </div>
+        </section>
+
+        <section id="faza-2" class="ekran">
+            <h2 class="tytul-zadania">ZADANIE #1</h2>
+            <p class="podtytul-zadania">"kopia zapasowa"</p>
+            
+            <div class="ramka">
+                <div class="siatka-2x2">
+                    <img src="media/F2-przycisk-zdjecie1.jpg" alt="Wskazówka 1" class="przycisk-obraz" onclick="pokazModal('image', 'media/F2-pokaz-zdjecie1.jpg')">
+                    <img src="media/F2-przycisk-film.jpg" alt="Wskazówka 2" class="przycisk-obraz" onclick="pokazModal('video', 'media/F2-pokaz-film.mp4')">
+                    <img src="media/F2-przycisk-audio.jpg" alt="Wskazówka 3" class="przycisk-obraz" onclick="pokazModal('audio', 'media/F2-pokaz-audio.mp3')">
+                    <img src="media/F2-przycisk-zdjecie2.jpg" alt="Wskazówka 4" class="przycisk-obraz" onclick="pokazModal('image', 'media/F2-pokaz-zdjecie2.jpg')">
+                </div>
+            </div>
+
+            <div class="kontener-kodu">
+                <p class="maly-napis">WPROWADŹ PIN</p>
+                <input type="number" id="pin-input" class="pole-input" pattern="\d*" maxlength="4">
+                <button class="przycisk" onclick="sprawdzPin()">ZATWIERDŹ</button>
+                <p id="wiadomosc-faza-2" class="wiadomosc-bledu"></p>
+            </div>
+
+            <div id="faza-2-sukces" class="ukryty">
+                <p id="tekst-pisany-2" class="tekst-pisany"></p>
+                <h1 id="liczba-b4" class="duza-liczba ukryty">B4</h1>
+                <button id="przycisk-faza-2" class="przycisk ukryty" onclick="pokazEkran('faza-3')">DALEJ</button>
+            </div>
+        </section>
+
+        <section id="faza-3" class="ekran">
+            <h2 class="tytul-zadania">ZADANIE #2</h2>
+            <p class="podtytul-zadania">"dwuetapowa weryfikacja"</p>
+
+            <div id="faza-3-zadanie">
+                <p id="szyfr">A4A1C1A2C4 B2D3A4C1C2 B3C2 D1C2B1A4B3D3A3D3</p>
+                <input type="text" id="haslo-input" class="pole-input" placeholder="Wprowadź hasło...">
+                <button class="przycisk" onclick="sprawdzHaslo()">ZATWIERDŹ</button>
+                <p id="wiadomosc-faza-3" class="wiadomosc-bledu"></p>
+            </div>
+
+            <div id="faza-3-sukces" class="ukryty">
+                <p class="maly-napis">DRUGA LICZBA</p>
+                <h1 class="duza-liczba">C3</h1>
+                <button class="przycisk" onclick="pokazEkran('faza-4')">DALEJ</button>
+            </div>
+        </section>
+
+        <section id="faza-4" class="ekran">
+            
+            <div id="faza-4-intro">
+                <p id="tekst-pisany-3" class="tekst-pisany"></p>
+                <button id="przycisk-faza-4-start" class="przycisk ukryty" onclick="pokazZadanie3()">DALEJ</button>
+            </div>
+
+            <div id="faza-4-lista" class="ukryty">
+                <h2 class="tytul-zadania">ZADANIE #3</h2>
+                <p class="podtytul-zadania">"w sieci linków"</p>
+                <div class="lista-linkow">
+                    <p>https://bezpiecznylink.pl</p>
+                    <p>https://l1nksafira.pl</p>
+                    <p>https://dobra.str0na.pl/563</p>
+                    <p>https://popravny.pl/link/safira/653</p>
+                </div>
+                <button class="przycisk" onclick="rozpocznijQuizLinkow()">DALEJ</button>
+            </div>
+
+            <div id="faza-4-quiz" class="ukryty">
+                <div id="linki-czesc-1" class="quiz-czesc">
+                    <button class="przycisk-link" onclick="sprawdzLink(1, false)">http://bezpiecznylink.pl</button>
+                    <button class="przycisk-link" onclick="sprawdzLink(1, true)">https://bezpiecznylink.pl</button>
+                    <button class="przycisk-link" onclick="sprawdzLink(1, false)">http://bezpiecznylinkpl</button>
+                    <button class="przycisk-link" onclick="sprawdzLink(1, false)">http://bezpiecznylnk.pl</button>
+                </div>
+                <div id="linki-czesc-2" class="quiz-czesc ukryty">
+                    <button class="przycisk-link" onclick="sprawdzLink(2, false)">https://linksafira.pl</button>
+                    <button class="przycisk-link" onclick="sprawdzLink(2, false)">https://l1nksafir4.pl</button>
+                    <button class="przycisk-link" onclick="sprawdzLink(2, true)">https://l1nksafira.pl</button>
+                    <button class="przycisk-link" onclick="sprawdzLink(2, false)">https:/l1nksafira.pl</button>
+                </div>
+                <div id="linki-czesc-3" class="quiz-czesc ukryty">
+                    <button class="przycisk-link" onclick="sprawdzLink(3, true)">https://dobra.str0na.pl/563</button>
+                    <button class="przycisk-link" onclick="sprawdzLink(3, false)">https://dobra.strona.pl/653</button>
+                    <button class="przycisk-link" onclick="sprawdzLink(3, false)">https:/dobra.str0na.pl/563</button>
+                    <button class="przycisk-link" onclick="sprawdzLink(3, false)">https://d0bra.str0na.pl/563</button>
+                </div>
+                <div id="linki-czesc-4" class="quiz-czesc ukryty">
+                    <button class="przycisk-link" onclick="sprawdzLink(4, false)">https://poprawny.pl/link/safira/653</button>
+                    <button class="przycisk-link" onclick="sprawdzLink(4, true)">https://popravny.pl/link/safira/653</button>
+                    <button class="przycisk-link" onclick="sprawdzLink(4, false)">https://popravny.pl/link/safira/563</button>
+                    <button class="przycisk-link" onclick="sprawdzLink(4, false)">https://popravny.pl/linksafira/563</button>
+                </div>
+            </div>
+
+            <div id="faza-4-sukces" class="ukryty">
+                <p class="maly-napis">TRZECIA LICZBA</p>
+                <h1 class="duza-liczba">D2</h1>
+                <button class="przycisk" onclick="pokazEkran('faza-5')">DALEJ</button>
+            </div>
+        </section>
+        
+        <section id="faza-5" class="ekran">
+            <div id="faza-5-zadanie" class="ukryty">
+                <h2 class="tytul-zadania">ZADANIE #4</h2>
+                <p class="podtytul-zadania">"liczby widmo"</p>
+                <div class="siatka-2x2">
+                    <img src="media/F5-zdjecie-1.jpg" alt="Wskazówka A" class="przycisk-obraz">
+                    <img src="media/F5-zdjecie-2.jpg" alt="Wskazówka B" class="przycisk-obraz">
+                    <img src="media/F5-zdjecie-3.jpg" alt="Wskazówka C" class="przycisk-obraz">
+                    <img src="media/F5-zdjecie-4.jpg" alt="Wskazówka D" class="przycisk-obraz">
+                </div>
+                <div class="kontener-kodu">
+                    <label for="ip-1" class="maly-napis">NUMER IP:</label>
+                    <div id="ip-kontener">
+                        <input type="number" id="ip-1" class="pole-ip" pattern="\d*">
+                        <span>.</span>
+                        <input type="number" id="ip-2" class="pole-ip" pattern="\d*">
+                        <span>.</span>
+                        <input type="number" id="ip-3" class="pole-ip" pattern="\d*">
+                        <span>.</span>
+                        <input type="number" id="ip-4" class="pole-ip" pattern="\d*">
+                    </div>
+                    <button class="przycisk" onclick="sprawdzIP()">ZAKOŃCZ</button>
+                    <p id="wiadomosc-faza-5" class="wiadomosc-bledu"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="faza-6-wygrana" class="ekran">
+            <div id="faza-6-tresc" class="ukryty">
+                <h1 class="tytul-glowny">GRATULACJE!</h1>
+                <p class="tekst-koncowy">
+                    Udało ci się złapać hakera i uchronić Zosię przed utratą danych! Pamiętaj jednak, że w prawdziwym życiu ludzie którym zależy na Twoich danych i pieniądzach działają bardzo rozważnie. Nigdy nie zapominaj również, że niebezpieczne linki nie zawsze wyglądają podejrzanie. Stosuj dwuetapową weryfikację, zapisuj ważne dane w zaszyfrowanej chmurze i nikomu nie podawaj do niej hasła. A, i najważniejsze- nie daj się ograć hakerom! ;)
+                </p>
+                <p class="podpis-koncowy">Uczniowie ZSZ "Hubal" Radom</p>
+                <button class="przycisk" onclick="location.href='https://TWOJA-STRONA-Z-CERTYFIKATEM.pl'">CERTYFIKAT</button>
+            </div>
+        </section>
+
+        <section id="faza-7-przegrana" class="ekran">
+
+		<div id="faza-7-tresc">
+        <h1 class="tytul-glowny">PRZEGRANA</h1>
+        <p class="tekst-koncowy">
+            Niestety, nie udało Ci się wykonać wszystkich zadań na czas. Bogatszy o zdobytą wiedzę, możesz spróbować ponownie.
+        </p>
+        <button class="przycisk" onclick="resetGry()">SPRÓBUJ PONOWNIE</button>
+		</div>
+
+		</section>
+
+    </main>
+
+    <div id="modal-overlay" class="ukryty">
+        <div class="modal-content">
+            <button class="modal-close" onclick="zamknijModal()">X</button>
+            <div id="modal-dynamic-content">
+                </div>
+        </div>
+    </div>
+	
+	<audio id="muzyka-tla" src="media/tlo.mp3" loop></audio>
+    
+    <audio id="sfx-pisanie-petla" src="media/pisanie.mp3" loop></audio>
+    
+    <audio id="sfx-poprawny" src="media/dobrze.mp3"></audio>
+    <audio id="sfx-bledny" src="media/zle.mp3"></audio>
+    
+    <audio id="sfx-wygrana" src="media/wygrana.mp3"></audio>
+    
+    <audio id="sfx-przegrana" src="media/porazka.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

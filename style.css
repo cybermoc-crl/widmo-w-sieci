@@ -1,0 +1,411 @@
+/* ===== USTAWIENIA GLOBALNE ===== */
+:root {
+    --kolor-glowny: #00FF00;
+    --kolor-tla: #000000;
+    --czcionka-tytul: 'Press Start 2P', cursive;
+    --czcionka-tekst: 'VT323', monospace;
+}
+
+/* Resetowanie domyślnych stylów */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    background-color: var(--kolor-tla);
+    color: var(--kolor-glowny);
+    font-family: var(--czcionka-tekst);
+    font-size: 1.2rem; /* Powiększenie bazowej czcionki dla czytelności */
+    overflow: hidden; /* Zapobiega przewijaniu */
+}
+
+/* ===== GŁÓWNY KONTENER I EKRANY ===== */
+#escape-room-container {
+    width: 100%;
+    height: 100vh; /* 100% wysokości ekranu */
+    position: relative;
+}
+
+.ekran {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: none; /* Domyślnie wszystkie ekrany są ukryte */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: absolute; /* Nakładamy ekrany na siebie */
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* Pozwalamy przewijać, jeśli treść się nie mieści */
+}
+
+.ekran.aktywny {
+    display: flex; /* Pokazuje aktywny ekran */
+}
+
+/* ===== UNIWERSALNE ELEMENTY ===== */
+.ukryty {
+    display: none !important; /* Używamy !important, aby nadpisać inne style */
+}
+
+.przycisk {
+    font-family: var(--czcionka-tytul);
+    font-size: 1rem;
+    background-color: var(--kolor-glowny);
+    color: var(--kolor-tla);
+    border: none;
+    padding: 15px 30px;
+    margin-top: 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.przycisk:hover {
+    opacity: 0.8;
+}
+
+.przycisk-obraz {
+    cursor: pointer;
+    max-width: 100%;
+    height: auto;
+    border: 2px solid var(--kolor-glowny);
+}
+
+.przycisk-obraz:hover {
+    box-shadow: 0 0 15px var(--kolor-glowny);
+}
+
+.pole-input, .pole-ip {
+    font-family: var(--czcionka-tekst);
+    font-size: 1.5rem;
+    color: var(--kolor-glowny);
+    background-color: #111;
+    border: 2px solid var(--kolor-glowny);
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+}
+
+/* Usuwa strzałki w polach numerycznych (dla estetyki) */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.wiadomosc-bledu {
+    color: #FF0000; /* Czerwony dla błędów */
+    font-family: var(--czcionka-tytul);
+    font-size: 0.8rem;
+    height: 20px; /* Rezerwuje miejsce, aby ekran nie "skakał" */
+    margin-top: 10px;
+}
+
+.maly-napis {
+    font-family: var(--czcionka-tytul);
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.duza-liczba {
+    font-family: var(--czcionka-tytul);
+    font-size: 4rem;
+    margin: 10px 0;
+}
+
+/* ===== ZEGAR (FAZA 2+) ===== */
+#zegar-kontener {
+    display: none; /* Domyślnie ukryty, JS go pokaże */
+    position: fixed; /* Zawsze na górze */
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Orbitron', sans-serif; /* Czcionka "analogowa" */
+    font-size: 1.5rem;
+    padding: 5px 15px;
+    border: 2px solid var(--kolor-glowny);
+    background-color: var(--kolor-tla);
+    z-index: 100; /* Nad ekranami, ale pod modalem */
+}
+
+/* ===== MODAL (OKNO POPUP) ===== */
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none; /* Domyślnie ukryty */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Na samym wierzchu */
+}
+
+#modal-overlay.aktywny {
+    display: flex; /* Pokazuje modal */
+}
+
+.modal-content {
+    position: relative;
+    width: 95%;
+    max-width: 800px;
+}
+
+.modal-close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--kolor-glowny);
+    color: var(--kolor-tla);
+    border: 2px solid var(--kolor-glowny);
+    border-radius: 50%;
+    font-family: var(--czcionka-tytul);
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+#modal-dynamic-content video,
+#modal-dynamic-content img,
+#modal-dynamic-content audio {
+    width: 100%;
+    max-height: 80vh; /* Maksymalna wysokość, aby się zmieściło */
+    border: 2px solid var(--kolor-glowny);
+}
+
+/* ===== FAZA 1: POCZĄTKOWA ===== */
+.tytul-glowny {
+    font-family: var(--czcionka-tytul);
+    font-size: 2.0rem; /* Duży napis */
+    margin-bottom: 10px;
+    line-height: 1.2;
+	word-break: break-all;
+}
+
+.podtytul {
+    font-family: var(--czcionka-tytul);
+    font-size: 1rem; /* Mniejszy napis */
+    margin-bottom: 40px;
+}
+
+#przycisk-koperta {
+    width: 150px;
+    border-radius: 10px;
+}
+
+#logo-antywirusa {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+#pasek-postepu-kontener {
+    width: 80%;
+    max-width: 400px;
+    height: 30px;
+    border: 2px solid var(--kolor-glowny);
+    background-color: #111;
+	margin: 0 auto;
+}
+
+#pasek-postepu-wewn {
+    width: 0%; /* Zaczyna od 0% */
+    height: 100%;
+    background-color: var(--kolor-glowny);
+    transition: width 0.1s linear; /* Płynna animacja */
+}
+
+#tekst-ladowania {
+    margin-top: 15px;
+    font-family: var(--czcionka-tytul);
+    font-size: 0.8rem;
+}
+
+#duszek-gif {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 120px;
+    z-index: 50; /* Pod zegarem, ale nad treścią */
+}
+
+.tekst-pisany {
+    width: 100%;
+    max-width: 600px;
+    font-size: 1.5rem; /* Większa czcionka dla tekstu pisanego */
+    text-align: left;
+    white-space: pre-wrap; /* Zachowuje nowe linie */
+    word-wrap: break-word; /* Zawija słowa */
+}
+
+/* ===== FAZA 2: ZADANIE #1 ===== */
+.tytul-zadania {
+    font-family: var(--czcionka-tytul);
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.podtytul-zadania {
+    font-family: var(--czcionka-tytul);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.ramka {
+    width: 100%;
+    max-width: 500px;
+    height: 60vh; /* 3/5 ekranu to 60vh */
+    max-height: 500px;
+    border: 2px solid var(--kolor-glowny);
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.siatka-2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.siatka-2x2 .przycisk-obraz,
+#faza-5-zadanie .siatka-2x2 .przycisk-obraz {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Dopasowuje obraz, aby wypełnił ramkę */
+    border: 2px solid var(--kolor-glowny);
+}
+
+.kontener-kodu {
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#pin-input {
+    font-family: var(--czcionka-tytul);
+    font-size: 2rem;
+    letter-spacing: 10px; /* Rozsuwa cyfry */
+    width: 150px;
+}
+
+/* ===== FAZA 3: ZADANIE #2 ===== */
+#szyfr {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    word-break: break-all; /* Łamie szyfr, jeśli się nie mieści */
+}
+
+#haslo-input {
+    text-transform: uppercase; /* Automatycznie zmienia na wielkie litery */
+}
+
+/* ===== FAZA 4: ZADANIE #3 ===== */
+.lista-linkow {
+    font-family: monospace; /* Lepsze do linków */
+    font-size: 0.9rem;
+    text-align: left;
+    background-color: #111;
+    border: 2px solid var(--kolor-glowny);
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 500px;
+    word-break: break-all; /* Łamie długie linki */
+}
+
+.lista-linkow p {
+    margin-bottom: 10px;
+}
+
+#faza-4-quiz {
+    width: 100%;
+    max-width: 600px;
+}
+
+.quiz-czesc {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.przycisk-link {
+    font-family: monospace;
+    font-size: 0.9rem;
+    background-color: transparent;
+    color: var(--kolor-glowny);
+    border: 2px solid var(--kolor-glowny);
+    padding: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    text-align: left;
+    word-break: break-all;
+}
+
+.przycisk-link:hover {
+    background-color: #222;
+}
+
+/* ===== FAZA 5: ZADANIE #4 ===== */
+#ip-kontener {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    max-width: 350px;
+}
+
+.pole-ip {
+    width: 22%; /* Dzieli 100% na 4 pola */
+    padding: 10px 5px;
+    font-size: 1.2rem;
+    -moz-appearance: textfield;
+}
+
+#ip-kontener span {
+    font-size: 2rem;
+    font-family: var(--czcionka-tytul);
+}
+
+/* NOWA (POPRAWNA) WERSJA do style.css */
+#faza-5-zadanie, #faza-6-tresc, #faza-7-tresc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.tekst-koncowy {
+    font-size: 1.0rem;
+    max-width: 98%px;
+    margin: 20px 0;
+    text-align: justify; /* Wyrównuje tekst końcowy */
+    white-space: normal; /* Nadpisuje styl .tekst-pisany */
+}
+
+.podpis-koncowy {
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 600px;
+    text-align: right;
+    margin-bottom: 20px;
+}
