@@ -190,11 +190,10 @@ input[type=number] {
 /* ===== FAZA 1: POCZĄTKOWA ===== */
 .tytul-glowny {
     font-family: var(--czcionka-tytul);
-    font-size: 1.8rem; /* Duży napis */
+    font-size: min(2.0rem, 8vw);
     margin-bottom: 10px;
     line-height: 1.2;
-	width: 100%;
-	word-break: break-all;
+	white-space: nowrap;
 }
 
 .podtytul {
@@ -411,4 +410,5 @@ input[type=number] {
     margin-bottom: 20px;
 
 }
+
 
