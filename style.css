@@ -395,7 +395,7 @@ input[type=number] {
 }
 
 .tekst-koncowy {
-    font-size: 1.0rem;
+    font-size: 0.9rem;
     max-width: 98%px;
     margin: 20px 0;
     text-align: justify; /* Wyrównuje tekst końcowy */
@@ -408,4 +408,5 @@ input[type=number] {
     max-width: 600px;
     text-align: right;
     margin-bottom: 20px;
+
 }
