@@ -190,7 +190,7 @@ input[type=number] {
 /* ===== FAZA 1: POCZĄTKOWA ===== */
 .tytul-glowny {
     font-family: var(--czcionka-tytul);
-    font-size: min(2.0rem, 8vw);
+    font-size: min(1.5rem, 8vw);
     margin-bottom: 10px;
     line-height: 1.2;
 	white-space: nowrap;
@@ -410,5 +410,6 @@ input[type=number] {
     margin-bottom: 20px;
 
 }
+
 
 
