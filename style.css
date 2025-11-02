@@ -312,6 +312,40 @@ input[type=number] {
     width: 150px;
 }
 
+/* ===== NOWA POPRAWKA: Ekran sukcesu Fazy 2 ===== */
+
+#faza-2-sukces {
+    display: flex;
+    flex-direction: column;  /* Układa elementy pionowo */
+    justify-content: center; /* Centruje całą grupę w pionie */
+    align-items: center;     /* Centruje wszystko w poziomie */
+
+    /* Kluczowe: każe mu zająć 100% wysokości ekranu */
+    height: 100%; 
+    width: 100%;
+    max-width: 600px; /* Utrzymuje maksymalną szerokość */
+}
+
+#faza-2-sukces .tekst-pisany {
+    /* Trik: pozwalamy tekstowi rosnąć, ale tylko do pewnego stopnia */
+    flex: 1 1 auto;
+
+    /* Kluczowa linia: tekst nie może być wyższy niż 50% ekranu */
+    max-height: 50vh; 
+
+    /* Jeśli tekst jest dłuższy, stanie się przewijalny W OBRĘBIE swojego pudełka */
+    overflow-y: auto; 
+
+    margin: 20px 0; /* Odstęp nad i pod tekstem */
+    padding-right: 10px; /* Mały odstęp dla paska przewijania */
+}
+
+/* Upewniamy się, że liczba i przycisk nie będą się kurczyć */
+#faza-2-sukces .duza-liczba,
+#faza-2-sukces .przycisk {
+    flex-shrink: 0;
+}
+
 /* ===== FAZA 3: ZADANIE #2 ===== */
 #szyfr {
     font-size: 1.2rem;
@@ -427,6 +461,7 @@ input[type=number] {
     margin-bottom: 20px;
 
 }
+
 
 
 
