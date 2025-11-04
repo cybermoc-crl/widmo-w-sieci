@@ -435,31 +435,26 @@ input[type=number] {
 #faza-2-sukces,
 #faza-4-intro {
     display: flex;
-    flex-direction: column;  /* Układa elementy pionowo */
-    justify-content: space-between; /* Centruje całą grupę w pionie */
-    align-items: center;     /* Centruje wszystko w poziomie */
-    
-    /* Kluczowe: każe im zająć 100% wysokości ekranu */
+    flex-direction: column;
+    justify-content: center; /* WRÓCILIŚMY DO CENTER */
+    align-items: center;
     height: 100%; 
     width: 100%;
-    max-width: 600px; /* Utrzymuje maksymalną szerokość */
+    max-width: 600px;
 }
 
 /* Ustawia wspólne zasady dla wszystkich 3 pól tekstowych */
 #faza-1-tekst .tekst-pisany,
 #faza-2-sukces .tekst-pisany,
 #faza-4-intro .tekst-pisany {
-    /* Trik: pozwalamy tekstowi rosnąć, ale tylko do pewnego stopnia */
     flex: 1 1 auto;
-    
-    /* Kluczowa linia: tekst nie może być wyższy niż 50% ekranu */
-    max-height: 50vh; 
-    
-    /* Jeśli tekst jest dłuższy, stanie się przewijalny W OBRĘBIE swojego pudełka */
-    overflow-y: auto; 
-    
-    margin: 20px 0; /* Odstęp nad i pod tekstem */
-    padding-right: 10px; /* Mały odstęp dla paska przewijania */
+
+    /* KLUCZOWE LINIE: */
+    max-height: 50vh; /* Tekst nie może być wyższy niż 50% ekranu */
+    overflow-y: auto; /* Jeśli jest dłuższy, staje się przewijalny */
+
+    margin: 20px 0;
+    padding-right: 10px;
 }
 
 /* Upewniamy się, że przyciski i liczby nie będą się kurczyć */
@@ -467,8 +462,9 @@ input[type=number] {
 #faza-2-sukces .duza-liczba,
 #faza-2-sukces .przycisk,
 #faza-4-intro .przycisk {
-    flex-shrink: 0;
+    flex-shrink: 0; /* Nigdy nie kurcz się */
 }
+
 
 
 
