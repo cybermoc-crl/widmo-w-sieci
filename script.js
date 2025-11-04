@@ -292,12 +292,7 @@ function uruchomWygrana() {
     // (Punkt 4: Dźwięk wygranej)
     muzykaTla.pause(); // Zatrzymujemy muzykę w tle
     odtworzDzwiek(sfxWygrana); // Odtwarzamy dźwięk wygranej
-}
 
-/**
- * 6c: Pokazuje treść gratulacji po filmie
- */
-function pokazGratulacje() {
     document.getElementById('faza-6-tresc').classList.remove('ukryty');
 }
 
@@ -489,4 +484,5 @@ function efektPisania(elementId, tekst, funkcjaPoSkonczeniu = null) {
     pisz(); // Rozpocznij pisanie
 
 }
+
 
