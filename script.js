@@ -292,8 +292,6 @@ function uruchomWygrana() {
     // (Punkt 4: Dźwięk wygranej)
     muzykaTla.pause(); // Zatrzymujemy muzykę w tle
     odtworzDzwiek(sfxWygrana); // Odtwarzamy dźwięk wygranej
-
-    pokazModal('video', 'media/F6-zakonczenie.mp4', 'pokazGratulacje');
 }
 
 /**
@@ -491,3 +489,4 @@ function efektPisania(elementId, tekst, funkcjaPoSkonczeniu = null) {
     pisz(); // Rozpocznij pisanie
 
 }
+
