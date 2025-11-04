@@ -370,12 +370,6 @@ input[type=number] {
 }
 
 /* ===== FAZA 5: ZADANIE #4 ===== */
-/* Dodaj ten nowy blok kodu */
-#faza-5-zadanie .siatka-2x2 {
-    width: 90%;   /* <-- OTO POPRAWKA */
-    margin-bottom: 20px; 
-}
-
 #faza-5 {
     justify-content: flex-start; /* Wyrównuje zawartość do GÓRY */
     padding-top: 70px; /* Robi miejsce pod zegarem */
@@ -471,6 +465,7 @@ input[type=number] {
 #faza-4-intro .przycisk {
     flex-shrink: 0;
 }
+
 
 
 
