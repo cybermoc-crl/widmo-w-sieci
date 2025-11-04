@@ -295,7 +295,7 @@ input[type=number] {
 #faza-5-zadanie .siatka-2x2 .przycisk-obraz {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Dopasowuje obraz, aby wypełnił ramkę */
+    object-fit: contain; /* Dopasowuje obraz, aby wypełnił ramkę */
     border: 2px solid var(--kolor-glowny);
 }
 
@@ -464,6 +464,7 @@ input[type=number] {
 #faza-4-intro .przycisk {
     flex-shrink: 0; /* Nigdy nie kurcz się */
 }
+
 
 
 
