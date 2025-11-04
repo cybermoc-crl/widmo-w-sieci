@@ -73,7 +73,6 @@ body, html {
 .przycisk-obraz {
     cursor: pointer;
     max-width: 100%;
-    height: auto;
     border: 2px solid var(--kolor-glowny);
 }
 
@@ -437,7 +436,7 @@ input[type=number] {
 #faza-4-intro {
     display: flex;
     flex-direction: column;  /* Układa elementy pionowo */
-    justify-content: center; /* Centruje całą grupę w pionie */
+    justify-content: space-between; /* Centruje całą grupę w pionie */
     align-items: center;     /* Centruje wszystko w poziomie */
     
     /* Kluczowe: każe im zająć 100% wysokości ekranu */
@@ -470,6 +469,7 @@ input[type=number] {
 #faza-4-intro .przycisk {
     flex-shrink: 0;
 }
+
 
 
 
