@@ -169,8 +169,10 @@ function sprawdzHaslo() {
     hasloWpisane = hasloWpisane.toUpperCase();
     const poprawne1 = "SILNE HASLO TO PODSTAWA";
     const poprawne2 = "SILNE HASŁO TO PODSTAWA";
-
-    if (hasloWpisane === poprawne1 || hasloWpisane === poprawne2) {
+    const poprawne3 = "SILNE HASŁO TO PODSTAWA ";
+    const poprawne4 = "SILNE HASLO TO PODSTAWA ";
+    
+    if (hasloWpisane === poprawne1 || hasloWpisane === poprawne2 || hasloWpisane === poprawne3 || hasloWpisane === poprawne4) {
         odtworzDzwiek(sfxPoprawny); // (Punkt 3)
         wiadomosc.textContent = "";
         // ... (reszta kodu bez zmian) ...
@@ -487,4 +489,5 @@ function efektPisania(elementId, tekst, funkcjaPoSkonczeniu = null) {
         }
     }
     pisz(); // Rozpocznij pisanie
+
 }
