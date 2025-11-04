@@ -256,6 +256,7 @@ input[type=number] {
 #faza-2 {
     justify-content: flex-start; /* Wyrównuje zawartość do GÓRY */
     padding-top: 70px; /* Robi miejsce pod zegarem */
+	height: 100%;
 }
 
 .tytul-zadania {
@@ -273,11 +274,13 @@ input[type=number] {
 .ramka {
     width: 100%;
     max-width: 500px;
-    height: 60vh; /* 3/5 ekranu to 60vh */
+    max-height: 60vh; /* Nie może być wyższa niż 60% ekranu */
+    flex: 1 1 auto;
     max-height: 500px;
     border: 2px solid var(--kolor-glowny);
     padding: 10px;
     margin-bottom: 20px;
+	overflow: hidden;
 }
 
 .siatka-2x2 {
@@ -303,6 +306,7 @@ input[type=number] {
     display: flex;
     flex-direction: column;
     align-items: center;
+	flex-shrink: 0;
 }
 
 #pin-input {
@@ -373,6 +377,7 @@ input[type=number] {
 #faza-5 {
     justify-content: flex-start; /* Wyrównuje zawartość do GÓRY */
     padding-top: 70px; /* Robi miejsce pod zegarem */
+	height: 100%;
 }
 
 #ip-kontener {
@@ -465,6 +470,7 @@ input[type=number] {
 #faza-4-intro .przycisk {
     flex-shrink: 0;
 }
+
 
 
 
