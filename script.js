@@ -24,6 +24,7 @@ let czyGraAktywna = false; // Zapobiega podwójnemu zakończeniu gry
 let modalCallback = null; // Funkcja do wywołania po zamknięciu modala
 let pinBledneProby = 0;
 let hasloBledneProby = 0;
+let ipBledneProby = 0;
 
 // Teksty do animacji pisania (możesz je dowolnie zmieniać)
 // Użyj `\n` aby zrobić nową linię
@@ -312,14 +313,35 @@ function sprawdzIP() {
     const ip3 = document.getElementById('ip-3').value;
     const ip4 = document.getElementById('ip-4').value;
     const wiadomosc = document.getElementById('wiadomosc-faza-5');
+    const przyciskWskazowki = document.getElementById('przycisk-wskazowka-faza5');
 
     if (ip1 === "17" && ip2 === "88" && ip3 === "55" && ip4 === "18") {
-        odtworzDzwiek(sfxPoprawny); // (Punkt 3)
+        // Jeśli IP jest POPRAWNE
+        odtworzDzwiek(sfxPoprawny);
         wiadomosc.textContent = "";
-        pokazEkran('faza-6-wygrana');
+        ipBledneProby = 0; // Resetuj licznik błędów
+
+        if (przyciskWskazowki) {
+            przyciskWskazowki.classList.add('ukryty'); // Ukryj wskazówkę po sukcesie
+        }
+
+        pokazEkran('faza-6-wygrana'); // To wywoła funkcję uruchomWygrana()
+
     } else {
-        odtworzDzwiek(sfxBledny); // (Punkt 3)
+        // Jeśli IP jest BŁĘDNE
+        odtworzDzwiek(sfxBledny);
         wiadomosc.textContent = "Podpowiedź: kolejność alfabetu";
+
+        // === NOWA LOGIKA WSKAZÓWKI ===
+        ipBledneProby++; // Zwiększ licznik błędów
+
+        if (ipBledneProby >= 2) {
+            // Pokaż przycisk wskazówki po 2 błędach
+            if (przyciskWskazowki) {
+                przyciskWskazowki.classList.remove('ukryty');
+            }
+        }
+        // ============================
     }
 }
 
@@ -530,6 +552,7 @@ function efektPisania(elementId, tekst, funkcjaPoSkonczeniu = null) {
     pisz(); // Rozpocznij pisanie
 
 }
+
 
 
 
