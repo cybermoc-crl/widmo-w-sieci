@@ -330,7 +330,7 @@ function sprawdzIP() {
     } else {
         // Jeśli IP jest BŁĘDNE
         odtworzDzwiek(sfxBledny);
-        wiadomosc.textContent = "Podpowiedź: kolejność alfabetu";
+        wiadomosc.textContent = "Błędne IP";
 
         // === NOWA LOGIKA WSKAZÓWKI ===
         ipBledneProby++; // Zwiększ licznik błędów
@@ -552,6 +552,7 @@ function efektPisania(elementId, tekst, funkcjaPoSkonczeniu = null) {
     pisz(); // Rozpocznij pisanie
 
 }
+
 
 
 
