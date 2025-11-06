@@ -23,6 +23,7 @@ let czasPozostaly = 20 * 60; // 20 minut * 60 sekund
 let czyGraAktywna = false; // Zapobiega podwójnemu zakończeniu gry
 let modalCallback = null; // Funkcja do wywołania po zamknięciu modala
 let pinBledneProby = 0;
+let hasloBledneProby = 0;
 
 // Teksty do animacji pisania (możesz je dowolnie zmieniać)
 // Użyj `\n` aby zrobić nową linię
@@ -183,28 +184,51 @@ function sprawdzPin() {
 /* ===== FAZA 3: ZADANIE #2 LOGIKA ===== */
 
 /**
- * 3b/c: Sprawdza hasło
+ * 3b/c: Sprawdza hasło (Wersja z nowymi hasłami + logiką wskazówki)
  */
 function sprawdzHaslo() {
-    let hasloWpisane = document.getElementById('haslo-input').value;
     const wiadomosc = document.getElementById('wiadomosc-faza-3');
-    hasloWpisane = hasloWpisane.toUpperCase();
+    const przyciskWskazowki = document.getElementById('przycisk-wskazowka-faza3');
+    
+    // Używamy .trim(), aby automatycznie usunąć spacje z początku i końca
+    let hasloWpisane = document.getElementById('haslo-input').value.toUpperCase().trim(); 
+    
+    // Dzięki .trim(), musimy sprawdzać już tylko dwie główne wersje
     const poprawne1 = "SILNE HASLO TO PODSTAWA";
     const poprawne2 = "SILNE HASŁO TO PODSTAWA";
-    const poprawne3 = "SILNE HASŁO TO PODSTAWA ";
-    const poprawne4 = "SILNE HASLO TO PODSTAWA ";
-    
-    if (hasloWpisane === poprawne1 || hasloWpisane === poprawne2 || hasloWpisane === poprawne3 || hasloWpisane === poprawne4) {
-        odtworzDzwiek(sfxPoprawny); // (Punkt 3)
+
+    if (hasloWpisane === poprawne1 || hasloWpisane === poprawne2) {
+        // Jeśli hasło jest POPRAWNE
+        odtworzDzwiek(sfxPoprawny);
         wiadomosc.textContent = "";
-        // ... (reszta kodu bez zmian) ...
+        hasloBledneProby = 0; // Resetuj licznik błędów
+
+        if (przyciskWskazowki) {
+            przyciskWskazowki.classList.add('ukryty'); // Ukryj wskazówkę po sukcesie
+        }
+
+        // Ukrywanie zadania
         document.getElementById('faza-3-zadanie').classList.add('ukryty');
         document.querySelector('#faza-3 .tytul-zadania').classList.add('ukryty');
         document.querySelector('#faza-3 .podtytul-zadania').classList.add('ukryty');
+        
+        // Pokazywanie sukcesu
         document.getElementById('faza-3-sukces').classList.remove('ukryty');
+    
     } else {
-        odtworzDzwiek(sfxBledny); // (Punkt 3)
-        wiadomosc.textContent = "Wskazówka: QWERTY";
+        // Jeśli hasło jest BŁĘDNE
+        odtworzDzwiek(sfxBledny);
+        wiadomosc.textContent = "Wskazówka: szyfr znajduje się na plakacie";
+        
+        // Logika licznika wskazówki
+        hasloBledneProby++; // Zwiększ licznik błędów
+        
+        if (hasloBledneProby >= 3) {
+            // Pokaż przycisk wskazówki po 3 błędach
+            if (przyciskWskazowki) {
+                przyciskWskazowki.classList.remove('ukryty');
+            }
+        }
     }
 }
 
@@ -506,6 +530,7 @@ function efektPisania(elementId, tekst, funkcjaPoSkonczeniu = null) {
     pisz(); // Rozpocznij pisanie
 
 }
+
 
 
 
