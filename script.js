@@ -22,6 +22,7 @@ let timerInterval = null; // Przechowuje nasz interwał zegara
 let czasPozostaly = 20 * 60; // 20 minut * 60 sekund
 let czyGraAktywna = false; // Zapobiega podwójnemu zakończeniu gry
 let modalCallback = null; // Funkcja do wywołania po zamknięciu modala
+let pinBledneProby = 0;
 
 // Teksty do animacji pisania (możesz je dowolnie zmieniać)
 // Użyj `\n` aby zrobić nową linię
@@ -137,15 +138,24 @@ function uruchomPisanieFazy1() {
 function sprawdzPin() {
     const pinWpisany = document.getElementById('pin-input').value;
     const wiadomosc = document.getElementById('wiadomosc-faza-2');
+    const przyciskWskazowki = document.getElementById('przycisk-wskazowka-faza2');
 
     if (pinWpisany === "3285") {
-        odtworzDzwiek(sfxPoprawny); // (Punkt 3)
+        odtworzDzwiek(sfxPoprawny);
         wiadomosc.textContent = "";
-        // ... (reszta kodu bez zmian) ...
+        pinBledneProby = 0; // Resetuj licznik po sukcesie
+
+        if (przyciskWskazowki) {
+            przyciskWskazowki.classList.add('ukryty'); // Ukryj wskazówkę po sukcesie
+        }
+
+        // Ukrywanie elementów zadania
         document.querySelector('#faza-2 .ramka').classList.add('ukryty');
         document.querySelector('#faza-2 .kontener-kodu').classList.add('ukryty');
         document.querySelector('#faza-2 .tytul-zadania').classList.add('ukryty');
         document.querySelector('#faza-2 .podtytul-zadania').classList.add('ukryty');
+
+        // Pokazywanie ekranu sukcesu
         document.getElementById('faza-2-sukces').classList.remove('ukryty');
         efektPisania('tekst-pisany-2', TEKST_FAZA_2, () => {
             document.getElementById('liczba-b4').classList.remove('ukryty');
@@ -153,8 +163,20 @@ function sprawdzPin() {
         });
 
     } else {
-        odtworzDzwiek(sfxBledny); // (Punkt 3)
+        // Jeśli kod jest ZŁY
+        odtworzDzwiek(sfxBledny);
         wiadomosc.textContent = "Zły kod";
+
+        // === NOWA LOGIKA WSKAZÓWKI ===
+        pinBledneProby++; // Zwiększ licznik błędów
+
+        if (pinBledneProby >= 2) {
+            // Pokaż przycisk wskazówki po 2 błędach
+            if (przyciskWskazowki) {
+                przyciskWskazowki.classList.remove('ukryty');
+            }
+        }
+        // ============================
     }
 }
 
@@ -484,5 +506,6 @@ function efektPisania(elementId, tekst, funkcjaPoSkonczeniu = null) {
     pisz(); // Rozpocznij pisanie
 
 }
+
 
 
