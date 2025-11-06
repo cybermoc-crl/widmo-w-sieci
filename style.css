@@ -250,6 +250,13 @@ input[type=number] {
     word-wrap: break-word; /* Zawija słowa */
 }
 
+.wskazowka-glosnosc {
+    font-family: var(--czcionka-tytul);
+    font-size: 0.8rem;
+    color: var(--kolor-glowny);
+    margin-top: 20px; /* Odstęp od koperty */
+}
+
 /* ===== FAZA 2: ZADANIE #1 ===== */
 /* Dodaj ten nowy blok kodu */
 #faza-2 {
@@ -485,6 +492,7 @@ input[type=number] {
 #faza-4-intro .przycisk {
     flex-shrink: 0; /* Nigdy nie kurcz się */
 }
+
 
 
 
