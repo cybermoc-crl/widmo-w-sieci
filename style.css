@@ -315,6 +315,27 @@ input[type=number] {
     width: 150px;
 }
 
+/* ===== NOWA REGUŁA: Przycisk wskazówki ===== */
+.przycisk-wskazowka {
+    position: absolute; /* Pozycja względem ekranu fazy */
+    top: 80px;      /* Odstęp od góry (aby był pod zegarem) */
+    right: 20px;    /* Odstęp od prawej */
+    width: 50px;
+    height: 50px;
+    font-family: var(--czcionka-tytul);
+    font-size: 1.5rem; /* Mniejsza czcionka dla znaku "?" */
+    background-color: var(--kolor-tla);
+    color: var(--kolor-glowny);
+    border: 2px solid var(--kolor-glowny);
+    cursor: pointer;
+    z-index: 99; /* Nad treścią, ale pod zegarem i modalem */
+    padding: 0;
+}
+
+.przycisk-wskazowka:hover {
+    background-color: #111;
+}
+
 /* ===== FAZA 3: ZADANIE #2 ===== */
 #szyfr {
     font-size: 1.2rem;
@@ -464,6 +485,7 @@ input[type=number] {
 #faza-4-intro .przycisk {
     flex-shrink: 0; /* Nigdy nie kurcz się */
 }
+
 
 
 
