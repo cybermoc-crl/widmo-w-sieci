@@ -335,8 +335,8 @@ function sprawdzIP() {
         // === NOWA LOGIKA WSKAZÓWKI ===
         ipBledneProby++; // Zwiększ licznik błędów
 
-        if (ipBledneProby >= 2) {
-            // Pokaż przycisk wskazówki po 2 błędach
+        if (ipBledneProby >= 3) {
+            // Pokaż przycisk wskazówki po 3 błędach
             if (przyciskWskazowki) {
                 przyciskWskazowki.classList.remove('ukryty');
             }
@@ -552,6 +552,7 @@ function efektPisania(elementId, tekst, funkcjaPoSkonczeniu = null) {
     pisz(); // Rozpocznij pisanie
 
 }
+
 
 
 
