@@ -224,8 +224,8 @@ function sprawdzHaslo() {
         // Logika licznika wskazówki
         hasloBledneProby++; // Zwiększ licznik błędów
         
-        if (hasloBledneProby >= 3) {
-            // Pokaż przycisk wskazówki po 3 błędach
+        if (hasloBledneProby >= 2) {
+            // Pokaż przycisk wskazówki po 2 błędach
             if (przyciskWskazowki) {
                 przyciskWskazowki.classList.remove('ukryty');
             }
@@ -335,7 +335,7 @@ function sprawdzIP() {
         // === NOWA LOGIKA WSKAZÓWKI ===
         ipBledneProby++; // Zwiększ licznik błędów
 
-        if (ipBledneProby >= 3) {
+        if (ipBledneProby >= 2) {
             // Pokaż przycisk wskazówki po 3 błędach
             if (przyciskWskazowki) {
                 przyciskWskazowki.classList.remove('ukryty');
@@ -552,6 +552,7 @@ function efektPisania(elementId, tekst, funkcjaPoSkonczeniu = null) {
     pisz(); // Rozpocznij pisanie
 
 }
+
 
 
 
